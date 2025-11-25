@@ -1,0 +1,22 @@
+{% set current_temp = states('sensor.laundry_bath_temperature') | float %}
+{% set setpoint = state_attr('climate.laundry_bath', 'temperature') | float %}
+{% set rate = states('sensor.laundry_bath_temperature_derivative') | float %}
+
+{% if current_temp >= setpoint %}
+  Reached
+{% elif rate == 0 %}
+  Prediction not possible.
+{% else %}
+  {% set minutes_needed = (setpoint - current_temp) / rate %}
+  {% if minutes_needed > 0 %}
+    {% set hours = (minutes_needed // 60) | int %}
+    {% set minutes = (minutes_needed % 60) | round(0) | int %}
+    {% if hours > 0 %}
+      {{ hours }} hour{{ 's' if hours > 1 else '' }} {{ minutes }} minute{{ 's' if minutes != 1 else '' }} at {{ (now() + timedelta(minutes=minutes_needed)).strftime('%H:%M:%S') }}
+    {% else %}
+      {{ minutes_needed | round(1) }} minutes at {{ (now() + timedelta(minutes=minutes_needed)).strftime('%H:%M:%S') }}
+    {% endif %}
+  {% else %}
+    Temperature is moving away from setpoint
+  {% endif %}
+{% endif %}
