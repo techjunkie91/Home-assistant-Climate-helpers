@@ -1,0 +1,1 @@
+{{ states('sensor.laundry_bath_temperature') | float + (states('sensor.laundry_bath_temperature_derivative'))}}
