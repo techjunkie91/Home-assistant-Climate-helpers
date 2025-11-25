@@ -1,0 +1,18 @@
+type: custom:auto-entities
+card:
+  type: entities
+  title: Laundry & Bathroom
+filter:
+  include:
+    - options: {}
+      entity_id: sensor.Riin_temperature
+    - options: {}
+      area: Bathroom
+      device_manufacturer: Polyaire
+  exclude:
+    - options: {}
+      name: "*Damper"
+    - options: {}
+      name: "*Battery*"
+Sort:
+  ignore_case: true

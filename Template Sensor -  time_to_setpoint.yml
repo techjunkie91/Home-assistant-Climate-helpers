@@ -1,6 +1,6 @@
-{% set current_temp = states('sensor.laundry_bath_temperature') | float %}
-{% set setpoint = state_attr('climate.laundry_bath', 'temperature') | float %}
-{% set rate = states('sensor.laundry_bath_temperature_derivative') | float %}
+{% set current_temp = states('sensor.room_temperature') | float %}
+{% set setpoint = state_attr('climate.room', 'temperature') | float %}
+{% set rate = states('sensor.room_temperature_derivative') | float %}
 
 {% if current_temp >= setpoint %}
   Reached
